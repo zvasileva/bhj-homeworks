@@ -29,7 +29,6 @@ for (let i = 0; i < menuLink.length; i++) {
         }
 
         const menuSub = document.querySelector(parentClassName + ' > .menu_sub');
-        console.log(menuSub);
         if (menuSub) {
             if (menuSub.classList.contains('menu_active')) {
                 menuSub.classList.remove('menu_active'); 

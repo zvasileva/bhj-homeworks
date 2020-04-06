@@ -33,13 +33,8 @@ function click_prev () {
     }
 }
 
-next.onclick = function() {
-    click_next();
-}
-
-prev.onclick = function() {
-    click_prev();
-}
+next.onclick = click_next;
+prev.onclick = click_prev;
 
 
 

@@ -5,6 +5,8 @@ class Game {
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
 
+    this.timerId = null;
+
     this.reset();
 
     this.registerEvents();
@@ -16,6 +18,33 @@ class Game {
     this.lossElement.textContent = 0;
   }
 
+  timer(cntSec) { 
+
+    const timerValue = document.getElementById("timer");
+    timerValue.textContent = cntSec;
+
+    const timer = () =>  {
+        if (timerValue.textContent > 0) {
+            timerValue.textContent = timerValue.textContent - 1;
+        } else if (timerValue.textContent <= 0) {     
+            alert("Время закончилось! Вы проиграли!");
+            this.reset();
+        
+        }
+    }
+
+    this.timerId = setInterval(() => timer(), 1000);
+
+  }
+
+  stopTimer() {
+    if (this.timerId > 0) {
+        clearInterval(this.timerId);
+        this.timerId = null;
+    }
+  }     
+
+
   registerEvents() {
     /*
       TODO:
@@ -24,6 +53,20 @@ class Game {
       В случае правильного ввода слова вызываем this.success()
       При неправильном вводе символа - this.fail();
      */
+
+    const getPressKey = (event) => {
+      const currentSymbol = this.currentSymbol.textContent.toUpperCase();
+      const pressKey = String.fromCharCode(event.keyCode).toUpperCase();
+      if (pressKey === currentSymbol) {
+        this.success();
+      } else {
+        this.fail();
+      }  
+  
+     }
+
+     document.addEventListener('keypress', getPressKey);
+
   }
 
   success() {
@@ -52,6 +95,10 @@ class Game {
     const word = this.getWord();
 
     this.renderWord(word);
+
+    this.stopTimer();
+
+    this.timer(word.length);
   }
 
   getWord() {
@@ -66,7 +113,11 @@ class Game {
         'popcorn',
         'cinema',
         'love',
-        'javascript'
+        'javascript',
+        'привет',
+        'день',
+        'добро',
+        'привет day'
       ],
       index = Math.floor(Math.random() * words.length);
 
@@ -86,5 +137,6 @@ class Game {
   }
 }
 
-new Game(document.getElementById('game'))
+new Game(document.getElementById('game'));
+
 

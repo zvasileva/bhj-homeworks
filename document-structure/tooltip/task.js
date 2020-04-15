@@ -4,8 +4,13 @@ let activeTooltip;
 function insertTooltip (element) {
     activeTooltip = document.querySelector( '.tooltip');
     if (activeTooltip) {
+        if (activeTooltip === element.nextElementSibling) {
+            activeTooltip.remove();
+            return;
+        }
         activeTooltip.remove();
-    }
+    }     
+
     const tooltipText = element.getAttribute("title");
     element.insertAdjacentHTML("afterEnd",`<div class="tooltip" style="left: 0; top: 0">${tooltipText}</div>`);
     activeTooltip = document.querySelector( '.tooltip');
@@ -19,8 +24,7 @@ function insertTooltip (element) {
 for (let i = 0; i < hasTooltips.length; i++) {
     hasTooltips[i].addEventListener('click', e => {
         e.preventDefault();
-        insertTooltip (hasTooltips[i]);
-        
+        insertTooltip (hasTooltips[i]);       
       }
     );    
 
